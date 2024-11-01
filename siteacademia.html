@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Transform - Banner</title>
+    <style>
+        /* Estilos gerais */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Estilo para o cabeçalho fixo */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            color: #fff;
+            font-weight: bold;
+            z-index: 1000;
+        }
+
+        .navbar-logo {
+            font-size: 1.5em;
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: 1em;
+        }
+
+        .navbar-menu a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            transition: color 0.3s;
+        }
+
+        .navbar-menu a:hover {
+            color: #f2f2f2;
+        }
+
+        /* Estilo para o banner principal */
+        #hero-banner {
+            position: relative;
+            background-image: url('https://images.pexels.com/photos/1229356/pexels-photo-1229356.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        #hero-banner h1 {
+            font-size: 3em;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 0.5em 0;
+        }
+
+        #hero-banner p {
+            font-size: 1.2em;
+            margin-bottom: 1em;
+        }
+
+        .cta-button {
+            background-color: #ffffff;
+            color: #000;
+            font-weight: bold;
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        /* Seções do conteúdo */
+        section {
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        #sobre, #vantagens, #treinadores, #planos, #contato {
+            background-color: #f4f4f4;
+            margin: 20px 0;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        /* Estilo do rodapé */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+        }
+        
+        
+        /* Estilo do chatbot */
+        #chatbot {
+            display: none; /* Inicia escondido */
+            width: 350px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+            margin-top: -100px;
+        }
+
+        .chat-header {
+            background-color: #25D366;
+            padding: 15px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .chat-body {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .close-chat {
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            color: white;
+        }
+
+        /* Estilo das mensagens */
+        .message {
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 70%;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background-color: #dcf8c6; /* Cor das mensagens do usuário */
+            align-self: flex-end;
+        }
+
+        .bot-message {
+            background-color: #e8e8e8; /* Cor das mensagens do bot */
+            align-self: flex-start;
+        }
+
+        .input-container {
+            display: flex;
+            border-top: 1px solid #e8e8e8;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            border-radius: 0 0 10px 0;
+            outline: none;
+        }
+
+        button {
+            background-color: #25D366; /* Cor do botão como o WhatsApp */
+            border: none;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 0 0 10px 0;
+        }
+
+        button:hover {
+            background-color: #1ebc58; /* Cor do botão ao passar o mouse */
+        }
+
+        /* Estilo do ícone flutuante */
+        #chatbot-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 1000;
+        }        
+        #chatbot {
+    display: none; /* Inicia escondido */
+    width: 350px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    position: fixed; /* Para posicionamento fixo na tela */
+    top: 50%; /* Alinha verticalmente ao centro */
+    left: 50%; /* Alinha horizontalmente ao centro */
+    transform: translate(-50%, -50%); /* Ajusta para ficar exatamente no centro */
+    margin-top: 0; /* Remova o margin-top se houver */
+}
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="navbar-logo">NEW FIT</div>
+        <nav class="navbar-menu">
+            <a href="#sobre">Sobre</a>
+            <a href="#planos">planos</a>
+            <a href="#treinadores">Treinadores</a>
+            <a href="#planos">Planos</a>
+            <a href="#contato">Contato</a>
+            <a href="#cadastro" class="cta-button">Start Now</a>
+        </nav>
+    </header>
+
+    <!-- Banner Principal -->
+    <section id="hero-banner">
+        <h1>Academia New Fit</h1>
+        <p>Comece a mudança de seu corpo.</p>
+        <a href="#cadastro" class="cta-button">MATRÍCULE-SE</a>
+    </section>
+
+    <!-- Seções -->
+    <section id="sobre">
+        <h2>Sobre Nós</h2>
+        <p>Na GYM GYM, oferecemos a melhor estrutura e equipamentos para você alcançar seus objetivos de fitness.</p>
+    </section>
+
+    <section id="vantagens">
+        <h2>Vantagens</h2>
+        <p>Treinadores qualificados, horários flexíveis e um ambiente motivador esperam por você!</p>
+    </section>
+
+    <section id="treinadores">
+        <h2>Nossos Treinadores</h2>
+        <p>Conheça nossa equipe de especialistas que estará ao seu lado em cada passo da sua jornada.</p>
+    </section>
+
+    <section id="planos">
+        <h2>Planos de Assinatura</h2>
+        <p>Oferecemos diversos planos que se ajustam ao seu estilo de vida e necessidades.</p>
+    </section>
+
+    <section id="depoimentos">
+        <h2>Depoimentos</h2>
+        <p>"A Academia New Fit mudou minha vida! Os treinos são incríveis e a equipe é super atenciosa!" - Ana Silva</p>
+        <p>"Melhor lugar para treinar! Equipamentos modernos e um ambiente super motivador." - João Pereira</p>
+    </section>
+
+    <section id="galeria">
+        <h2>Galeria</h2>
+        <div style="display: flex; justify-content: center; flex-wrap: wrap;">
+            <img src="https://images.pexels.com/photos/3769029/pexels-photo-3769029.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Imagem da Academia" style="width: 300px; margin: 10px; border-radius: 8px;">
+            <img src="https://images.pexels.com/photos/4050312/pexels-photo-4050312.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Imagem da Academia" style="width: 300px; margin: 10px; border-radius: 8px;">
+            <img src="https://images.pexels.com/photos/3825517/pexels-photo-3825517.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Imagem da Academia" style="width: 300px; margin: 10px; border-radius: 8px;">
+            <img src="https://images.pexels.com/photos/3825518/pexels-photo-3825518.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" alt="Imagem da Academia" style="width: 300px; margin: 10px; border-radius: 8px;">
+        </div>
+    </section>
+
+    <section id="contato">
+        <h2>Contato</h2>
+        <form action="#" method="post">
+            <label for="nome">Nome:</label><br>
+            <input type="text" id="nome" name="nome" required style="padding: 10px; width: 300px; margin: 10px 0;"><br>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email" required style="padding: 10px; width: 300px; margin: 10px 0;"><br>
+            <label for="mensagem">Mensagem:</label><br>
+            <textarea id="mensagem" name="mensagem" required style="padding: 10px; width: 300px; margin: 10px 0;"></textarea><br>
+            <button type="submit" style="padding: 10px;">Enviar</button>
+        </form>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>&copy; 2024 Gym Transform. Todos os direitos reservados.</p>
+        <p>Endereço: Rua Exemplo, 123 - Campo Grande, MS | Telefone: (67) 1234-5678</p>
+    </footer>
+    
+    
+<!-- Chatbot -->
+<div id="chatbot">
+    <div class="chat-header">
+        <span class="close-chat">&times;</span>
+        Chatbot
+    </div>
+    <div class="chat-body" id="chat-body">
+        <!-- Mensagens do chatbot aparecerão aqui -->
+    </div>
+    <div class="input-container">
+        <input type="text" id="user-input" placeholder="Digite sua mensagem...">
+        <button id="send-message">Enviar</button>
+    </div>
+</div>
+
+<!-- Ícone flutuante do chatbot -->
+<img id="chatbot-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="Chatbot" width="50" height="50" />
+
+<script>
+    const chatBody = document.getElementById('chat-body');
+    const userInput = document.getElementById('user-input');
+    const sendMessageButton = document.getElementById('send-message');
+    const closeChatButton = document.querySelector('.close-chat');
+    const chatbotIcon = document.getElementById('chatbot-icon');
+
+    const apiKey = 'AIzaSyBXOLxkpRWxaF24mLyE5uT71niN9_axagQ'; // Sua chave API
+
+    function appendMessage(author, message) {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message');
+        messageElement.classList.add(author === 'Você' ? 'user-message' : 'bot-message');
+        messageElement.innerText = `${author}: ${message}`;
+        chatBody.appendChild(messageElement);
+        chatBody.scrollTop = chatBody.scrollHeight; // Rolagem para o fim
+    }
+
+    sendMessageButton.addEventListener('click', async () => {
+        const userMessage = userInput.value;
+        if (userMessage) {
+            appendMessage('Você', userMessage);
+            userInput.value = '';
+            chatbotIcon.style.display = 'none'; // Esconde o ícone ao interagir
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        contents: [{
+                            parts: [{
+                                text: `Por favor, responda em português: ${userMessage}` // Solicita resposta em português
+                            }]
+                        }]
+                    })
+                });
+
+                // Verifique se a resposta foi bem-sucedida
+                if (!response.ok) {
+                    appendMessage('Chatbot', 'Erro na comunicação com a API.');
+                    console.error('Erro na requisição:', response);
+                    return;
+                }
+
+                const data = await response.json();
+                console.log('Resposta da API:', JSON.stringify(data, null, 2)); // Log formatado
+
+                // Verifique a estrutura da resposta
+                if (data.candidates && data.candidates.length > 0 && data.candidates[0].content.parts.length > 0) {
+                    const botMessage = data.candidates[0].content.parts[0].text;
+                    appendMessage('Chatbot', botMessage);
+                } else {
+                    appendMessage('Chatbot', 'Desculpe, não consegui entender sua solicitação.');
+                }
+            } catch (error) {
+                appendMessage('Chatbot', 'Desculpe, ocorreu um erro. Tente novamente mais tarde.');
+                console.error('Erro:', error);
+            }
+        }
+    });
+
+    closeChatButton.addEventListener('click', () => {
+        document.getElementById('chatbot').style.display = 'none';
+        chatbotIcon.style.display = 'block'; // Mostra o ícone novamente
+    });
+
+    // Adicionando a funcionalidade para abrir o chatbot ao clicar no ícone
+    chatbotIcon.addEventListener('click', () => {
+        document.getElementById('chatbot').style.display = 'block';
+        chatbotIcon.style.display = 'none'; // Esconde o ícone ao abrir o chatbot
+   
+    });
+    
+</script>
+</body>
+</html>
